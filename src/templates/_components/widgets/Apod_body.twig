@@ -1,0 +1,20 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * craftcms3-nasa-apod plugin for Craft CMS
+ *
+ * Apod Widget Body
+ *
+ * @author    Adam Pat Pattison
+ * @copyright Copyright (c) 2018 Adam Pat Pattison
+ * @link      https://www.adampatpattison.co.uk
+ * @package   Craftcms3nasaapod
+ * @since     1
+ */
+#}
+
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@adampatpattison/craftcms3nasaapod/assetbundles/apodwidget/dist', true) ~ '/img/Apod-icon.svg' %}
+
+<img src="{{ iconUrl }}" height="64" width="64" />
+
+<p>{{ message }}</p>

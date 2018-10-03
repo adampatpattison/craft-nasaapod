@@ -1,0 +1,40 @@
+{
+    "name": "adampatpattison/craftcms3-nasa-apod",
+    "description": "Adds a widget with NASA's astrology picture of the day",
+    "type": "craft-plugin",
+    "version": "1",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "craftcms3-nasa-apod"
+    ],
+    "support": {
+        "docs": "https://github.com/adampatpattison/craftcms3-nasa-apod/blob/master/README.md",
+        "issues": "https://github.com/adampatpattison/craftcms3-nasa-apod/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adam Pat Pattison",
+            "homepage": "https://www.adampatpattison.co.uk"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "adampatpattison\\craftcms3nasaapod\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "craftcms3-nasa-apod",
+        "handle": "craftcms3-nasa-apod",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/adampatpattison/craftcms3-nasa-apod/master/CHANGELOG.md",
+        "class": "adampatpattison\\craftcms3nasaapod\\Craftcms3nasaapod"
+    }
+}

@@ -1,0 +1,26 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * craftcms3-nasa-apod plugin for Craft CMS
+ *
+ * Apod Widget Settings
+ *
+ * @author    Adam Pat Pattison
+ * @copyright Copyright (c) 2018 Adam Pat Pattison
+ * @link      https://www.adampatpattison.co.uk
+ * @package   Craftcms3nasaapod
+ * @since     1
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("adampatpattison\\craftcms3nasaapod\\assetbundles\\craftcms3nasaapod\\Craftcms3nasaapodAsset") %}
+
+{{ forms.textField({
+    label: 'Message',
+    instructions: 'Enter a message here.',
+    id: 'message',
+    name: 'message',
+    value: widget['message']})
+}}
