@@ -1,8 +1,7 @@
-# craftcms3-nasa-apod plugin for Craft CMS 3.x
+# NASA Astrology Astrology Picture of the Day widget plugin for Craft CMS 3.x
+Adds a simple widget which pulls the NASA Astrology Picture of the Day in to the admin dashboard
 
-Adds a widget with NASA's astrology picture of the day
-
-![Screenshot](resources/img/plugin-logo.png)
+![Screenshot](resources/img/plugin-screenshot.png)
 
 ## Requirements
 
@@ -18,26 +17,20 @@ To install the plugin, follow these instructions.
 
 2. Then tell Composer to load the plugin:
 
-        composer require adampatpattison/craftcms3-nasa-apod
+        composer require adampatpattison/craft-nasaapod
 
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for craftcms3-nasa-apod.
+3. In the Control Panel, go to Settings → Plugins and click the “Install” button for NASA Astrology Astrology Picture of the Day widget.
 
-## craftcms3-nasa-apod Overview
+## NASA Astrology Astrology Picture of the Day widget Overview
+This plugin, adds a simple widget which pulls the NASA Astrology Picture of the Day in to the admin dashboard. It requires the user to generate an API Key from the NASA API website and support caching the API calls so as not to spam the API.
 
--Insert text here-
+## Using NASA Astrology Astrology Picture of the Day widget
 
-## Configuring craftcms3-nasa-apod
+To get an API Key, visit [https://api.nasa.gov](https://api.nasa.gov/index.html#apply-for-an-api-key) and add a valid email address to receive your key.
+Once completed, you can add your API key to the widget settings once the plugin is enabled and added via the dashboard control.
 
--Insert text here-
+There is also a data caching option which is enabled by default but can be customised. This is to reduce the amount of calls made to the API.
 
-## Using craftcms3-nasa-apod
-
--Insert text here-
-
-## craftcms3-nasa-apod Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
+![Screenshot](resources/img/plugin-setting-screenshot.png)
 
 Brought to you by [Adam Pat Pattison](https://www.adampatpattison.co.uk)

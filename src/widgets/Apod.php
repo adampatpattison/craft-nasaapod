@@ -1,27 +1,28 @@
 <?php
 /**
- * craftcms3-nasa-apod plugin for Craft CMS 3.x
+ * NASA APOD plugin for Craft CMS 3.x
  *
- * Adds a widget with NASA's astrology picture of the day
+ * Adds a simple widget which pulls the NASA Astrology Picture of the Day in
  *
  * @link      https://www.adampatpattison.co.uk
  * @copyright Copyright (c) 2018 Adam Pat Pattison
  */
 
-namespace adampatpattison\craftcms3nasaapod\widgets;
+namespace adampatpattison\nasaapod\widgets;
 
-use adampatpattison\craftcms3nasaapod\Craftcms3nasaapod;
-use adampatpattison\craftcms3nasaapod\assetbundles\apodwidget\ApodWidgetAsset;
+use adampatpattison\nasaapod\NasaApod;
 
 use Craft;
 use craft\base\Widget;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 
 /**
- * craftcms3-nasa-apod Widget
+ * NASA APOD Widget
  *
  * @author    Adam Pat Pattison
- * @package   Craftcms3nasaapod
- * @since     1
+ * @package   NasaApod
+ * @since     1.0.0
  */
 class Apod extends Widget
 {
@@ -30,31 +31,38 @@ class Apod extends Widget
     // =========================================================================
 
     /**
-     * @var string
+     * @var string The message to display
      */
-    public $message = 'Hello, world.';
+    public $apiKey;
+    public $cacheDuration;
+    public $cacheDurationOptions;
 
     // Static Methods
     // =========================================================================
-
     /**
-     * @inheritdoc
+     * Returns the display name of this class.
+     *
+     * @return string The display name of this class.
      */
     public static function displayName(): string
     {
-        return Craft::t('craftcms3-nasa-apod', 'Apod');
+        return Craft::t('nasa-apod', 'NASA Astrology Picture of the Day');
     }
 
     /**
-     * @inheritdoc
+     * Returns the path to the widget’s SVG icon.
+     *
+     * @return string|null The path to the widget’s SVG icon
      */
     public static function iconPath()
     {
-        return Craft::getAlias("@adampatpattison/craftcms3nasaapod/assetbundles/apodwidget/dist/img/Apod-icon.svg");
+        return Craft::getAlias('@adampatpattison/nasaapod/icon.svg');
     }
 
     /**
-     * @inheritdoc
+     * Returns the widget’s maximum colspan.
+     *
+     * @return int|null The widget’s maximum colspan, if it has one
      */
     public static function maxColspan()
     {
@@ -65,7 +73,20 @@ class Apod extends Widget
     // =========================================================================
 
     /**
+     * Apod constructor.
+     *
+     * @param array $config
+     */
+    public function __construct(array $config = [])
+    {
+        $this->_setCacheDurationOptions();
+        $this->cacheDuration = 3;
+        parent::__construct($config);
+    }
+
+    /**
      * @inheritdoc
+     * @return array
      */
     public function rules()
     {
@@ -73,20 +94,22 @@ class Apod extends Widget
         $rules = array_merge(
             $rules,
             [
-                ['message', 'string'],
-                ['message', 'default', 'value' => 'Hello, world.'],
+                ['apiKey', 'string'],
+                ['cacheDuration', 'number', 'min' => 0, 'max' => 24],
+                ['cacheDuration', 'default', 'value'=> 3],
             ]
         );
         return $rules;
     }
 
     /**
-     * @inheritdoc
+     * Returns the component’s settings HTML.
+     * @return string|null
      */
     public function getSettingsHtml()
     {
         return Craft::$app->getView()->renderTemplate(
-            'craftcms3-nasa-apod/_components/widgets/Apod_settings',
+            'nasa-apod/_components/widgets/Apod_settings',
             [
                 'widget' => $this
             ]
@@ -94,17 +117,59 @@ class Apod extends Widget
     }
 
     /**
-     * @inheritdoc
+     * Returns the widget's body HTML.
+     *
+     * @return string|false The widget’s body HTML, or `false` if the widget
+     *                      should not be visible. (If you don’t want the widget
+     *                      to be selectable in the first place, use {@link isSelectable()}.)
      */
     public function getBodyHtml()
     {
-        Craft::$app->getView()->registerAssetBundle(ApodWidgetAsset::class);
 
+        $cacheKey = 'ak:' . $this->apiKey . 'cd:'.$this->cacheDuration;
+        $result = $this->cacheDuration > 0 ? Craft::$app->getCache()->get($cacheKey) : false;
+        if(!$result) {
+            $url = 'https://api.nasa.gov/planetary/apod?api_key='.$this->apiKey;
+//            $ch = curl_init();
+//            curl_setopt($ch, CURLOPT_URL, $url);
+//            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+//            $result = json_decode(curl_exec($ch));
+//            curl_close($ch);
+            try {
+                //make Guzzle request to Nasa api
+                $guzzleClient = new GuzzleClient;
+                $response = $guzzleClient->get($url);
+                $responseBody = $response->getBody();
+                $result = json_decode($responseBody->getContents());
+            } catch (GuzzleRequestException $e){
+                $result = json_decode($e->getResponse()->getBody()->getContents());
+            }
+
+            if(!isset($result->error) && $this->cacheDuration > 0) {
+                //cache so not spamming the API but leaves enough time to get a relatively recent
+                Craft::$app->getCache()->set($cacheKey, $result, (60*60)*$this->cacheDuration); //(60 seconds * 60 minutes) * X = X hours
+            }
+        }
         return Craft::$app->getView()->renderTemplate(
-            'craftcms3-nasa-apod/_components/widgets/Apod_body',
+            'nasa-apod/_components/widgets/Apod_body',
             [
-                'message' => $this->message
+                'apiKey' => $this->apiKey,
+                'result' => $result
             ]
         );
     }
+
+    /**
+     *
+     */
+    private function _setCacheDurationOptions()
+    {
+        $this->cacheDurationOptions = [0 => Craft::t('nasa-apod', 'Disable Cache')];
+        for($hourInt = 1; $hourInt <= 24; $hourInt++){
+            $this->cacheDurationOptions[$hourInt] = Craft::t('nasa-apod', '{hourInt} Hours', ['hourInt' => $hourInt]);
+        }
+        return $this->cacheDurationOptions;
+    }
+
 }

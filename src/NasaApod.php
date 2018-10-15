@@ -1,16 +1,16 @@
 <?php
 /**
- * craftcms3-nasa-apod plugin for Craft CMS 3.x
+ * NASA APOD plugin for Craft CMS 3.x
  *
- * Adds a widget with NASA's astrology picture of the day
+ * Adds a simple widget which pulls the NASA Astrology Picture of the Day in
  *
  * @link      https://www.adampatpattison.co.uk
  * @copyright Copyright (c) 2018 Adam Pat Pattison
  */
 
-namespace adampatpattison\craftcms3nasaapod;
+namespace adampatpattison\nasaapod;
 
-use adampatpattison\craftcms3nasaapod\widgets\Apod as ApodWidget;
+use adampatpattison\nasaapod\widgets\Apod as ApodWidget;
 
 use Craft;
 use craft\base\Plugin;
@@ -22,20 +22,20 @@ use craft\events\RegisterComponentTypesEvent;
 use yii\base\Event;
 
 /**
- * Class Craftcms3nasaapod
+ * Class NasaApod
  *
  * @author    Adam Pat Pattison
- * @package   Craftcms3nasaapod
- * @since     1
+ * @package   NasaApod
+ * @since     1.0.0
  *
  */
-class Craftcms3nasaapod extends Plugin
+class NasaApod extends Plugin
 {
     // Static Properties
     // =========================================================================
 
     /**
-     * @var Craftcms3nasaapod
+     * @var NasaApod
      */
     public static $plugin;
 
@@ -45,7 +45,7 @@ class Craftcms3nasaapod extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1';
+    public $schemaVersion = '1.0.0';
 
     // Public Methods
     // =========================================================================
@@ -65,27 +65,6 @@ class Craftcms3nasaapod extends Plugin
                 $event->types[] = ApodWidget::class;
             }
         );
-
-        Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                }
-            }
-        );
-
-        Craft::info(
-            Craft::t(
-                'craftcms3-nasa-apod',
-                '{name} plugin loaded',
-                ['name' => $this->name]
-            ),
-            __METHOD__
-        );
     }
-
-    // Protected Methods
-    // =========================================================================
 
 }
