@@ -8,11 +8,13 @@
         "cms",
         "craftcms",
         "craft-plugin",
-        "NASA apod"
+        "NASA apod",
+        "widget",
+        "photos"
     ],
     "support": {
-        "docs": "https://github.com/adampatpattison/craft-nasa-apod/blob/master/README.md",
-        "issues": "https://github.com/adampatpattison/craft-nasa-apod/issues"
+        "docs": "https://github.com/adampatpattison/craft-nasaapod/blob/master/README.md",
+        "issues": "https://github.com/adampatpattison/craft-nasaapod/issues"
     },
     "license": "MIT",
     "authors": [
@@ -34,7 +36,7 @@
         "handle": "nasa-apod",
         "hasCpSettings": false,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/adampatpattison/craft-nasa-apod/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/adampatpattison/craft-nasaapod/master/CHANGELOG.md",
         "class": "adampatpattison\\nasaapod\\NasaApod"
     }
 }
