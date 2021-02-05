@@ -2,7 +2,7 @@
 /**
  * NASA APOD plugin for Craft CMS 3.x
  *
- * Adds a simple widget which pulls the NASA Astrology Picture of the Day in
+ * Adds a simple widget which pulls the NASA Astronomy Picture of the Day in
  *
  * @link      https://www.adampatpattison.co.uk
  * @copyright Copyright (c) 2018 Adam Pat Pattison

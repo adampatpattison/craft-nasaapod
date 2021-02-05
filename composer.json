@@ -1,8 +1,8 @@
 {
     "name": "adampatpattison/craft-nasaapod",
-    "description": "Adds a simple widget which pulls the NASA Astrology Picture of the Day in the dashboard",
+    "description": "Adds a simple widget which pulls the NASA Astronomy Picture of the Day in the dashboard",
     "type": "craft-plugin",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "keywords": [
         "craft",
         "cms",
@@ -32,7 +32,7 @@
         }
     },
     "extra": {
-        "name": "NASA Astrology Picture of the Day",
+        "name": "NASA Astronomy Picture of the Day",
         "handle": "nasa-apod",
         "hasCpSettings": false,
         "hasCpSection": false,
