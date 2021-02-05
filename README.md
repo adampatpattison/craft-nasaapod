@@ -19,7 +19,7 @@ To install the plugin, follow these instructions.
 
         composer require adampatpattison/craft-nasaapod
 
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for NASA Astrology Astrology Picture of the Day widget.
+3. In the Control Panel, go to Settings → Plugins and click the “Install” button for NASA Astronomy Astronomy Picture of the Day widget.
 
 ## NASA Astronomy Picture of the Day widget Overview
 This plugin, adds a simple widget which pulls the NASA Astronomy Picture of the Day in to the admin dashboard. It requires the user to generate an API Key from the NASA API website and support caching the API calls so as not to spam the API.
